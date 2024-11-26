@@ -24,7 +24,8 @@ services:
       dockerfile: Dockerfile
     container_name: full-stack_backend
     environment:
-      - MONGODB_URI=mongodb://root:admin@host.docker.internal:27017/full-stack_chatApp
+      - MONGODB_URI=mongodb://root:admin@mongo:27017/full-stack_chatApp
+     # - MONGODB_URI=mongodb://root:admin@host.docker.internal:27017/full-stack_chatApp
       - JWT_SECRET=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MzI0NjA1NTEsImV4cCI6MTc2Mzk5NjU1MSwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.YTeR6zLCKuOPjz5CYfwxW1gXp_wP1gAnN3qSMJIFQFg
       - PORT=5001
       - NODE_ENV=production
@@ -35,7 +36,8 @@ services:
     networks:
       - full-stack
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
+      #test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
+      test: ["CMD-SHELL", "echo 'db.runCommand({ ping: 1 })' | mongo localhost:27017"]
       interval: 10s
       timeout: 5s
       retries: 3
